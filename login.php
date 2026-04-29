@@ -17,31 +17,27 @@ if(isset($_POST['login'])) {
     $result = mysqli_stmt_get_result($stmt);
 
     if(mysqli_num_rows($result) > 0) {
-        $data = mysqli_fetch_array($result);
-        
-        // Verify password (assuming plain text for now, but should use password_hash/password_verify)
-        if($data['password'] === $password) {
-            $role = $data['roletype'];
-            
-            $_SESSION['uid'] = $data['userid'];
-            $_SESSION['type'] = $role;
-            $_SESSION['email'] = $data['email'];
-            $_SESSION['name'] = $data['name'] ?? 'User';
+$data = mysqli_fetch_array($result);
 
-            if($role == 1) {
-                header("Location: admin/dashboard.php");
-                exit();
-            } else if($role == 2) {
-                header("Location: index.php");
-                exit();
-            }
-        } else {
-            $error_message = "Invalid email or password";
-        }
-    } else {
-        $error_message = "Invalid email or password";
+if (password_verify($password, $data['password'])) {
+    $role = $data['roletype'];
+
+    $_SESSION['uid'] = $data['userid'];
+    $_SESSION['type'] = $role;
+    $_SESSION['email'] = $data['email'];
+    $_SESSION['name'] = $data['name'] ?? 'User';
+
+    if($role == 1) {
+        header("Location: admin/dashboard.php");
+        exit();
+    } else if($role == 2) {
+        header("Location: users/dashboard.php");
+        exit();
     }
-    
+} else {
+    $error_message = "Invalid email or password";
+}    
+}    
     mysqli_stmt_close($stmt);
 }
 ?>
@@ -53,6 +49,8 @@ if(isset($_POST['login'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Cinema Hall System</title>
     <link rel="stylesheet" href="css/login.css">
+        <link rel="icon" type="image/png" href="images/icon.ico">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">

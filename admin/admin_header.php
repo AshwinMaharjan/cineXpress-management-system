@@ -8,9 +8,15 @@ function is_active(string $page): string {
 }
 
 // ── Admin session info (adjust to your session keys) ───────────────────────
-$admin_name  = $_SESSION['admin_name']  ?? 'Administrator';
-$admin_email = $_SESSION['admin_email'] ?? 'admin@cinebook.com';
+$admin_name   = $_SESSION['admin_name']   ?? 'Super Admin';
+$admin_email  = $_SESSION['admin_email']  ?? 'super_admin@gmail.com';
+$admin_pic    = $_SESSION['admin_pic']    ?? '';   // e.g. "avatar123.png"
 $admin_avatar = strtoupper(substr($admin_name, 0, 1)); // initials fallback
+
+// Build the avatar image path; fall back to initials if no pic is set
+$admin_pic_path = !empty($admin_pic)
+    ? '../uploads/avatars/' . htmlspecialchars($admin_pic)
+    : '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +25,25 @@ $admin_avatar = strtoupper(substr($admin_name, 0, 1)); // initials fallback
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CineBook &mdash; Admin Panel</title>
     <link rel="stylesheet" href="../css/admin_header.css" />
+    <style>
+        /* Avatar image inside the header button */
+        .admin-avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+        }
+
+        /* Avatar image inside the dropdown header */
+        .dropdown-avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+        }
+    </style>
 </head>
 <body>
 <header class="admin-header" id="adminHeader">
@@ -27,7 +52,7 @@ $admin_avatar = strtoupper(substr($admin_name, 0, 1)); // initials fallback
         <!-- ── Logo ──────────────────────────────────────────── -->
         <a href="dashboard.php" class="admin-logo">
             <img src="../images/logo.png" alt="Logo" class="admin-logo__icon">
-            <span class="admin-logo__text">            
+            <span class="admin-logo__text">
                 <small class="admin-logo__badge">Admin</small>
             </span>
         </a>
@@ -40,7 +65,6 @@ $admin_avatar = strtoupper(substr($admin_name, 0, 1)); // initials fallback
                     <a href="dashboard.php"
                        class="admin-nav__link <?= is_active('dashboard.php') ?>">
                         <span class="nav-icon">
-                            <!-- Dashboard -->
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
                                  stroke="currentColor" stroke-width="2"
                                  stroke-linecap="round" stroke-linejoin="round">
@@ -56,7 +80,6 @@ $admin_avatar = strtoupper(substr($admin_name, 0, 1)); // initials fallback
                     <a href="categories.php"
                        class="admin-nav__link <?= is_active('categories.php') ?>">
                         <span class="nav-icon">
-                            <!-- Tag -->
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
                                  stroke="currentColor" stroke-width="2"
                                  stroke-linecap="round" stroke-linejoin="round">
@@ -72,7 +95,6 @@ $admin_avatar = strtoupper(substr($admin_name, 0, 1)); // initials fallback
                     <a href="movies.php"
                        class="admin-nav__link <?= is_active('movies.php') ?>">
                         <span class="nav-icon">
-                            <!-- Film -->
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
                                  stroke="currentColor" stroke-width="2"
                                  stroke-linecap="round" stroke-linejoin="round">
@@ -91,7 +113,6 @@ $admin_avatar = strtoupper(substr($admin_name, 0, 1)); // initials fallback
                     <a href="theater.php"
                        class="admin-nav__link <?= is_active('theater.php') ?>">
                         <span class="nav-icon">
-                            <!-- Theater -->
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
                                  stroke="currentColor" stroke-width="2"
                                  stroke-linecap="round" stroke-linejoin="round">
@@ -107,7 +128,6 @@ $admin_avatar = strtoupper(substr($admin_name, 0, 1)); // initials fallback
                     <a href="revenue.php"
                        class="admin-nav__link <?= is_active('revenue.php') ?>">
                         <span class="nav-icon">
-                            <!-- Chart -->
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
                                  stroke="currentColor" stroke-width="2"
                                  stroke-linecap="round" stroke-linejoin="round">
@@ -123,7 +143,6 @@ $admin_avatar = strtoupper(substr($admin_name, 0, 1)); // initials fallback
                     <a href="viewallusers.php"
                        class="admin-nav__link <?= is_active('viewallusers.php') ?>">
                         <span class="nav-icon">
-                            <!-- Users -->
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
                                  stroke="currentColor" stroke-width="2"
                                  stroke-linecap="round" stroke-linejoin="round">
@@ -141,7 +160,6 @@ $admin_avatar = strtoupper(substr($admin_name, 0, 1)); // initials fallback
                     <a href="viewallbooking.php"
                        class="admin-nav__link <?= is_active('viewallbooking.php') ?>">
                         <span class="nav-icon">
-                            <!-- Ticket -->
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
                                  stroke="currentColor" stroke-width="2"
                                  stroke-linecap="round" stroke-linejoin="round">
@@ -159,28 +177,25 @@ $admin_avatar = strtoupper(substr($admin_name, 0, 1)); // initials fallback
         <!-- ── Right Controls ────────────────────────────────── -->
         <div class="admin-header__right">
 
-            <!-- Notification Bell -->
-            <button class="header-icon-btn" aria-label="Notifications" title="Notifications">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                     stroke="currentColor" stroke-width="2"
-                     stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
-                    <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
-                </svg>
-                <span class="notif-dot"></span>
-            </button>
-
             <!-- Admin Avatar Dropdown -->
             <div class="admin-dropdown" id="adminDropdown">
                 <button class="admin-avatar-btn" id="avatarBtn"
                         aria-haspopup="true" aria-expanded="false"
                         aria-label="Admin menu">
                     <div class="admin-avatar">
-                        <?= htmlspecialchars($admin_avatar) ?>
+                        <?php if ($admin_pic_path): ?>
+                            <img src="<?= $admin_pic_path ?>"
+                                 alt="<?= htmlspecialchars($admin_name) ?>"
+                                 class="admin-avatar-img"
+                                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                            <span style="display:none;"><?= htmlspecialchars($admin_avatar) ?></span>
+                        <?php else: ?>
+                            <?= htmlspecialchars($admin_avatar) ?>
+                        <?php endif; ?>
                     </div>
                     <div class="admin-avatar-info">
                         <span class="avatar-name"><?= htmlspecialchars($admin_name) ?></span>
-                        <span class="avatar-role">Administrator</span>
+                        <span class="avatar-role">Super Admin</span>
                     </div>
                     <svg class="dropdown-caret" width="14" height="14" viewBox="0 0 24 24"
                          fill="none" stroke="currentColor" stroke-width="2.5"
@@ -193,7 +208,15 @@ $admin_avatar = strtoupper(substr($admin_name, 0, 1)); // initials fallback
                 <div class="admin-dropdown__menu" id="dropdownMenu" role="menu">
                     <div class="dropdown-header">
                         <div class="dropdown-avatar">
-                            <?= htmlspecialchars($admin_avatar) ?>
+                            <?php if ($admin_pic_path): ?>
+                                <img src="<?= $admin_pic_path ?>"
+                                     alt="<?= htmlspecialchars($admin_name) ?>"
+                                     class="dropdown-avatar-img"
+                                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                                <span style="display:none;"><?= htmlspecialchars($admin_avatar) ?></span>
+                            <?php else: ?>
+                                <?= htmlspecialchars($admin_avatar) ?>
+                            <?php endif; ?>
                         </div>
                         <div>
                             <p class="dropdown-name"><?= htmlspecialchars($admin_name) ?></p>

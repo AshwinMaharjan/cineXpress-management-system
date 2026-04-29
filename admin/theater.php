@@ -95,6 +95,7 @@ if(isset($_GET['editid'])){
     <title>Theater Management</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/admin_theater.css" />
+    <link rel="icon" type="image/png" href="../images/icon.ico">
 </head>
 <body>
 

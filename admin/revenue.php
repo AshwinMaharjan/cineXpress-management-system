@@ -15,6 +15,7 @@ if (!isset($_SESSION['uid'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Revenue Report</title>
     <link rel="stylesheet" href="../css/view_all_booking.css">
+    <link rel="icon" type="image/png" href="../images/icon.ico">
 </head>
 <body>
 <?php include("header.php"); ?>

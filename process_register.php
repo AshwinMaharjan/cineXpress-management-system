@@ -218,6 +218,9 @@ if (!$error) {
             font-weight: 600;
         }
     </style>
+
+        <link rel="icon" type="image/png" href="images/icon.ico">
+
 </head>
 <body>
 

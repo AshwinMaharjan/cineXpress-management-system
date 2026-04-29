@@ -47,6 +47,8 @@ function getYoutubeThumbnail($url) {
 
 <link rel="stylesheet" href="../css/view_added_movies.css">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="../images/icon.ico">
+
 
 <div class="vam-wrapper">
 
