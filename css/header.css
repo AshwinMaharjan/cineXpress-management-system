@@ -1,0 +1,831 @@
+/* ============================================================
+   CINEMA HALL — header.css
+   Scope : header.php (site-wide header)
+   Self-contained design tokens — works independently of
+   style.css / homepage.css.
+   ============================================================ */
+
+
+/* ────────────────────────────────────────────────────────────
+   1. DESIGN TOKENS
+──────────────────────────────────────────────────────────── */
+:root {
+    /* Core Theme */
+    --bg:           #0B0B0F;
+    --panel:        #14141A;
+    --panel-2:      #1C1C24;
+
+    /* Text */
+    --text:         #F5F5F5;
+    --muted:        rgba(245, 245, 245, 0.6);
+
+    /* Borders & Effects */
+    --border:       rgba(255, 255, 255, 0.08);
+    --hover:        rgba(255, 255, 255, 0.05);
+    --shadow:       0 8px 30px rgba(0, 0, 0, 0.6);
+    --shadow-lg:    0 20px 60px rgba(0, 0, 0, 0.8);
+
+    /* Accent — Cinema Gold */
+    --accent:       #D4AF37;
+    --accent-glow:  rgba(212, 175, 55, 0.25);
+    --accent-dim:   rgba(212, 175, 55, 0.15);
+
+    /* Status */
+    --danger:       #E63946;
+    --danger-bg:    rgba(230, 57, 70, 0.18);
+
+    /* UI */
+    --radius:       12px;
+    --radius-sm:    8px;
+    --radius-pill:  999px;
+
+    /* Layout */
+    --container:    1240px;
+    --transition:   0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Header heights */
+    --header-h:     72px;   /* normal state  */
+    --header-h-sm:  60px;   /* scrolled/compact */
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   2. RESET & BASE
+──────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    /* Push content below fixed header */
+    padding-top: var(--header-h);
+}
+
+a { text-decoration: none; color: inherit; }
+
+::selection {
+    background: var(--accent-dim);
+    color: var(--accent);
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   3. SITE HEADER  (fixed, scroll-aware)
+──────────────────────────────────────────────────────────── */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: var(--header-h);
+
+    /* Glassmorphism base */
+    background: rgba(11, 11, 15, 0.75);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+
+    border-bottom: 1px solid var(--border);
+
+    /* Subtle gold underline glow */
+    box-shadow:
+        0 1px 0 0 var(--accent-dim),
+        var(--shadow);
+
+    transition:
+        height          var(--transition),
+        background      var(--transition),
+        box-shadow      var(--transition),
+        backdrop-filter var(--transition);
+}
+
+/* ── Scrolled / compact state ── */
+.site-header.scrolled {
+    height: var(--header-h-sm);
+    background: rgba(11, 11, 15, 0.95);
+    box-shadow:
+        0 1px 0 0 var(--accent-dim),
+        0 4px 24px rgba(0, 0, 0, 0.8);
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   4. HEADER INNER  (flex row)
+──────────────────────────────────────────────────────────── */
+.header-inner {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    height: 100%;
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 28px;
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   5. LOGO
+──────────────────────────────────────────────────────────── */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    margin-right: 40px;
+    text-decoration: none;
+    transition: opacity var(--transition), transform var(--transition);
+}
+
+.logo:hover {
+    opacity: 0.88;
+    transform: scale(1.02);
+}
+
+/* ── Real logo image ── */
+.logo__img {
+    height: 50px;           /* adjust to your actual logo proportions */
+    width: auto;
+    object-fit: contain;
+    display: block;
+    /* Crisp rendering */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    /* Subtle glow so logo pops on dark bg */
+    filter: drop-shadow(0 0 8px var(--accent-glow));
+    transition:
+        filter var(--transition),
+        height var(--transition);
+}
+
+/* Shrink logo slightly when header is compact */
+.site-header.scrolled .logo__img {
+    height: 32px;
+}
+
+/* ── SVG fallback (only shown if logo.png 404s) ── */
+.logo__icon-fallback {
+    width: 38px;
+    height: 38px;
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-glow);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: height var(--transition), width var(--transition);
+}
+
+/* ── Logo wordmark ── */
+.logo__text {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 900;
+    font-size: 1.35rem;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    line-height: 1;
+    white-space: nowrap;
+    transition: font-size var(--transition);
+}
+
+.site-header.scrolled .logo__text {
+    font-size: 1.2rem;
+}
+
+/* Gold accent on the second word */
+.logo__text span {
+    color: var(--accent);
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   6. DESKTOP NAVIGATION
+──────────────────────────────────────────────────────────── */
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex: 1;               /* fills the middle space */
+}
+
+/* ── Each nav link ── */
+.nav-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 7px 14px;
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+    transition:
+        color       var(--transition),
+        background  var(--transition);
+}
+
+/* Nav icon — hidden by default, visible on active/hover */
+.nav-link__icon {
+    font-size: 0.75rem;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition:
+        opacity    var(--transition),
+        transform  var(--transition);
+}
+
+.nav-link:hover .nav-link__icon,
+.nav-link.active .nav-link__icon {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.nav-link:hover {
+    color: var(--text);
+    background: var(--hover);
+}
+
+/* ── Active state ── */
+.nav-link.active {
+    color: var(--accent);
+    background: var(--accent-dim);
+}
+
+/* Gold underline indicator on active link */
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;          /* flush with header border-bottom */
+    left: 14px;
+    right: 14px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: var(--radius-pill);
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   7. HEADER ACTIONS  (auth buttons / avatar)
+──────────────────────────────────────────────────────────── */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    margin-left: auto;
+}
+
+/* ── Ghost button (Sign In / Sign Out) ── */
+.btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    background: transparent;
+    white-space: nowrap;
+    transition:
+        color           var(--transition),
+        border-color    var(--transition),
+        background      var(--transition),
+        transform       var(--transition);
+}
+
+.btn-ghost:hover {
+    color: var(--text);
+    border-color: rgba(255,255,255,0.25);
+    background: var(--hover);
+    transform: scale(1.03);
+}
+
+/* Danger variant */
+.btn-ghost--danger {
+    color: var(--danger);
+    border-color: rgba(230, 57, 70, 0.25);
+}
+.btn-ghost--danger:hover {
+    background: var(--danger-bg);
+    border-color: rgba(230, 57, 70, 0.5);
+    color: var(--danger);
+}
+
+/* ── Gold CTA button (Book Tickets) ── */
+.btn-gold {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: #000;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    padding: 9px 20px;
+    border-radius: var(--radius-pill);
+    white-space: nowrap;
+    box-shadow: 0 0 20px var(--accent-glow);
+    transition:
+        background  var(--transition),
+        box-shadow  var(--transition),
+        transform   var(--transition);
+}
+
+.btn-gold:hover {
+    background: #f0c93a;
+    box-shadow: 0 0 34px var(--accent-glow);
+    transform: scale(1.04) translateY(-1px);
+}
+
+/* ── Admin badge ── */
+.admin-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--accent-dim);
+    color: var(--accent);
+    border: 1px solid var(--accent-glow);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: var(--radius-pill);
+    white-space: nowrap;
+    transition:
+        background  var(--transition),
+        box-shadow  var(--transition),
+        transform   var(--transition);
+}
+
+.admin-badge:hover {
+    background: rgba(212, 175, 55, 0.25);
+    box-shadow: 0 0 16px var(--accent-glow);
+    transform: scale(1.04);
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   8. AVATAR + DROPDOWN
+──────────────────────────────────────────────────────────── */
+.avatar-wrap {
+    position: relative;
+}
+
+/* ── Avatar button (initials circle) ── */
+.avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent) 0%, #b8962e 100%);
+    color: #000;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    border: 2px solid var(--accent-glow);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    box-shadow: 0 0 14px var(--accent-glow);
+    transition:
+        transform    var(--transition),
+        box-shadow   var(--transition),
+        border-color var(--transition);
+}
+
+.avatar:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 24px var(--accent-glow);
+    border-color: var(--accent);
+}
+
+/* ── Dropdown panel ── */
+.avatar-dropdown {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    min-width: 210px;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+
+    /* Hidden by default */
+    opacity: 0;
+    transform: translateY(-8px) scale(0.97);
+    pointer-events: none;
+    visibility: hidden;
+
+    transition:
+        opacity    var(--transition),
+        transform  var(--transition),
+        visibility 0s linear var(--transition);
+
+    /* Triangle pointer */
+    overflow: visible;
+}
+
+/* Triangle arrow */
+.avatar-dropdown::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: 12px;
+    width: 12px;
+    height: 12px;
+    background: var(--panel-2);
+    border-left: 1px solid var(--border);
+    border-top: 1px solid var(--border);
+    transform: rotate(45deg);
+}
+
+/* ── Open state ── */
+.avatar-dropdown.open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+    visibility: visible;
+    transition:
+        opacity   var(--transition),
+        transform var(--transition);
+}
+
+/* Header block inside dropdown */
+.avatar-dropdown__header {
+    padding: 14px 16px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.avatar-dropdown__name {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.avatar-dropdown__role {
+    font-size: 0.72rem;
+    color: var(--accent);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+}
+
+/* Divider */
+.avatar-dropdown__divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0;
+}
+
+/* Menu items */
+.avatar-dropdown__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--muted);
+    transition: background var(--transition), color var(--transition);
+}
+
+.avatar-dropdown__item i {
+    width: 16px;
+    text-align: center;
+    font-size: 0.82rem;
+    color: var(--accent);
+    flex-shrink: 0;
+}
+
+.avatar-dropdown__item:hover {
+    background: var(--hover);
+    color: var(--text);
+}
+
+/* Last item — rounded bottom */
+.avatar-dropdown__item:last-child {
+    border-radius: 0 0 var(--radius) var(--radius);
+}
+
+/* Danger item (sign out) */
+.avatar-dropdown__item--danger {
+    color: var(--danger);
+}
+
+.avatar-dropdown__item--danger i {
+    color: var(--danger);
+}
+
+.avatar-dropdown__item--danger:hover {
+    background: var(--danger-bg);
+    color: var(--danger);
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   9. HAMBURGER BUTTON (mobile)
+──────────────────────────────────────────────────────────── */
+.menu-toggle {
+    display: none;               /* shown only on mobile via media query */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    background: var(--hover);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    padding: 8px;
+    margin-left: 12px;
+    flex-shrink: 0;
+    transition: background var(--transition), border-color var(--transition);
+}
+
+.menu-toggle:hover {
+    background: var(--accent-dim);
+    border-color: var(--accent-glow);
+}
+
+/* Three bar lines */
+.menu-toggle__bar {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--text);
+    border-radius: var(--radius-pill);
+    transition:
+        transform   var(--transition),
+        opacity     var(--transition),
+        width       var(--transition);
+    transform-origin: center;
+}
+
+/* ── Animated X when open ── */
+.menu-toggle.is-open .menu-toggle__bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+.menu-toggle.is-open .menu-toggle__bar:nth-child(2) {
+    opacity: 0;
+    width: 0;
+}
+.menu-toggle.is-open .menu-toggle__bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   10. MOBILE NAV DRAWER
+──────────────────────────────────────────────────────────── */
+.mobile-nav {
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* Slides in from the top */
+    background: var(--panel);
+    border-top: 1px solid var(--border);
+    padding: 20px 24px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    overflow-y: auto;
+
+    /* Hidden by default */
+    transform: translateY(-12px);
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+
+    transition:
+        transform   var(--transition),
+        opacity     var(--transition),
+        visibility  0s linear 0.3s;
+
+    z-index: 999;
+}
+
+.mobile-nav.open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+    transition:
+        transform  var(--transition),
+        opacity    var(--transition);
+}
+
+/* ── Drawer nav links ── */
+.mobile-nav__links {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 20px;
+}
+
+/* Override .nav-link for mobile drawer */
+.mobile-nav .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 16px;
+    border-radius: var(--radius);
+    font-size: 0.95rem;
+    color: var(--muted);
+    font-weight: 500;
+    transition: background var(--transition), color var(--transition);
+}
+
+.mobile-nav .nav-link i {
+    width: 18px;
+    text-align: center;
+    color: var(--accent);
+    font-size: 0.9rem;
+}
+
+.mobile-nav .nav-link:hover {
+    background: var(--hover);
+    color: var(--text);
+}
+
+.mobile-nav .nav-link.active {
+    background: var(--accent-dim);
+    color: var(--accent);
+}
+
+/* ── Mobile auth section ── */
+.mobile-auth {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 8px;
+}
+
+/* User info block */
+.mobile-auth__user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+.mobile-auth__avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent) 0%, #b8962e 100%);
+    color: #000;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 0 12px var(--accent-glow);
+}
+
+.mobile-auth__name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+}
+
+.mobile-auth__role {
+    font-size: 0.72rem;
+    color: var(--accent);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* Button row inside mobile auth */
+.mobile-auth__btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.mobile-auth__btns .btn-ghost,
+.mobile-auth__btns .btn-gold,
+.mobile-auth__btns .admin-badge {
+    flex: 1;
+    justify-content: center;
+    min-width: 130px;
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   11. MOBILE BACKDROP
+──────────────────────────────────────────────────────────── */
+.nav-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    z-index: 998;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition);
+}
+
+.nav-backdrop.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   12. RESPONSIVE  (show/hide desktop ↔ mobile elements)
+──────────────────────────────────────────────────────────── */
+
+/* ── Desktop: hide hamburger ── */
+@media (min-width: 861px) {
+    .menu-toggle { display: none !important; }
+    .mobile-nav  { display: none !important; }
+    .nav-backdrop { display: none !important; }
+}
+
+/* ── Mobile: hide desktop nav + switch to hamburger ── */
+@media (max-width: 860px) {
+    .main-nav        { display: none; }
+    .header-actions  { display: none; }
+    .menu-toggle     { display: flex; }
+
+    .mobile-nav { display: flex; }
+
+    .header-inner {
+        padding: 0 20px;
+    }
+
+    /* Logo adjustments */
+    .logo {
+        margin-right: 0;
+    }
+
+    .logo__img {
+        height: 32px;
+    }
+
+    .logo__text {
+        font-size: 1.2rem;
+    }
+}
+
+/* ── Very small phones ── */
+@media (max-width: 380px) {
+    .logo__text {
+        font-size: 1.05rem;
+    }
+
+    .logo__img {
+        height: 28px;
+    }
+
+    .header-inner {
+        padding: 0 14px;
+    }
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   13. SCROLLBAR
+──────────────────────────────────────────────────────────── */
+.mobile-nav::-webkit-scrollbar { width: 4px; }
+.mobile-nav::-webkit-scrollbar-track { background: transparent; }
+.mobile-nav::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: var(--radius-pill);
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   END OF HEADER.CSS
+════════════════════════════════════════════════════════════ */

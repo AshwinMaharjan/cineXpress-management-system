@@ -1,0 +1,185 @@
+:root {
+    --bg: #0B0B0F;
+    --panel: #14141A;
+    --panel-2: #1C1C24;
+    --text: #F5F5F5;
+    --muted: rgba(245,245,245,0.6);
+    --border: rgba(255,255,255,0.08);
+    --accent: #D4AF37;
+    --danger: #E63946;
+    --radius: 12px;
+    --transition: 0.3s ease;
+}
+
+/* ───────── PAGE ───────── */
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, sans-serif;
+}
+
+.cat-page {
+    padding: 30px;
+}
+
+/* ───────── ALERT ───────── */
+.alert {
+    background: var(--accent);
+    color: black;
+    padding: 12px 18px;
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+/* ───────── LAYOUT ───────── */
+.cat-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+}
+
+/* ───────── FORM ───────── */
+.cat-form-card {
+    background: var(--panel);
+    padding: 20px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+}
+
+.cat-form-card h2 {
+    margin-bottom: 15px;
+}
+
+.cat-form-card input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 8px;
+}
+
+.cat-form-card button {
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+.cat-form-card button[name="add"] {
+    background: var(--accent);
+}
+
+.cat-form-card button[name="update"] {
+    background: var(--panel-2);
+    color: var(--text);
+}
+
+/* ───────── TABLE ───────── */
+.cat-table-card {
+    background: var(--panel);
+    padding: 20px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    text-align: left;
+    color: var(--muted);
+}
+
+.btn {
+    padding: 6px 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.btn.edit {
+    background: var(--accent);
+    color: black;
+}
+
+.btn.delete {
+    background: var(--danger);
+    color: white;
+}.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(6px);
+    z-index: 999;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-box {
+    background: var(--panel);
+    padding: 25px;
+    border-radius: var(--radius);
+    width: 350px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    text-align: center;
+    animation: pop 0.2s ease;
+}
+
+@keyframes pop {
+    from { transform: scale(0.9); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+}
+
+.modal-box h2 {
+    margin-bottom: 10px;
+    color: var(--accent);
+}
+
+.modal-box p {
+    color: var(--muted);
+    margin-bottom: 20px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.modal-actions button,
+.modal-actions a {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.modal-actions button {
+    background: var(--panel-2);
+    color: var(--text);
+}
+
+.danger-btn {
+    background: var(--danger);
+    color: white;
+    text-align: center;
+}

@@ -1,0 +1,674 @@
+/* ============================================================
+   CINEMA HALL — footer.css
+   Scope : footer.php (site-wide footer)
+   Self-contained design tokens — consistent with header.css
+   and homepage.css across the project.
+   ============================================================ */
+
+
+/* ────────────────────────────────────────────────────────────
+   1. DESIGN TOKENS  (self-contained)
+──────────────────────────────────────────────────────────── */
+:root {
+    /* Core Theme */
+    --bg:           #0B0B0F;
+    --panel:        #14141A;
+    --panel-2:      #1C1C24;
+
+    /* Text */
+    --text:         #F5F5F5;
+    --muted:        rgba(245, 245, 245, 0.6);
+    --muted-2:      rgba(245, 245, 245, 0.38);
+
+    /* Borders & Effects */
+    --border:       rgba(255, 255, 255, 0.08);
+    --hover:        rgba(255, 255, 255, 0.05);
+    --shadow:       0 8px 30px rgba(0, 0, 0, 0.6);
+    --shadow-lg:    0 20px 60px rgba(0, 0, 0, 0.8);
+
+    /* Accent — Cinema Gold */
+    --accent:       #D4AF37;
+    --accent-glow:  rgba(212, 175, 55, 0.25);
+    --accent-dim:   rgba(212, 175, 55, 0.15);
+    --accent-hover: #f0c93a;
+
+    /* Social brand colours */
+    --fb:           #1877F2;
+    --ig-start:     #f09433;
+    --ig-end:       #bc1888;
+    --yt:           #FF0000;
+    --tt:           #010101;
+    --x:            #000000;
+
+    /* UI */
+    --radius:       12px;
+    --radius-sm:    8px;
+    --radius-pill:  999px;
+    --input-bg:     rgba(255, 255, 255, 0.05);
+
+    /* Layout */
+    --container:    1240px;
+    --transition:   0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   2. RESET & BASE
+──────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+a   { text-decoration: none; color: inherit; }
+ul  { list-style: none; }
+img { display: block; max-width: 100%; }
+
+::selection {
+    background: var(--accent-dim);
+    color: var(--accent);
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   3. FOOTER WRAPPER
+──────────────────────────────────────────────────────────── */
+.site-footer {
+    position: relative;
+    background: var(--panel);
+    overflow: hidden;
+}
+
+/* Subtle full-footer background glow from bottom-center */
+.site-footer::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(
+            ellipse 70% 50% at 50% 120%,
+            var(--accent-glow),
+            transparent 65%
+        );
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Everything above the pseudo-element */
+.site-footer > * {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   4. TOP GOLD RULE
+──────────────────────────────────────────────────────────── */
+.footer__rule {
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--accent-dim) 20%,
+        var(--accent) 50%,
+        var(--accent-dim) 80%,
+        transparent 100%
+    );
+    box-shadow: 0 0 16px var(--accent-glow);
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   5. MAIN FOOTER GRID
+──────────────────────────────────────────────────────────── */
+.footer__main {
+    padding: 72px 24px 56px;
+}
+
+.footer__inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1.4fr;  /* brand wider, contact wider */
+    gap: 48px 40px;
+    align-items: start;
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   6. COLUMN BASE
+──────────────────────────────────────────────────────────── */
+.footer__col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   7. SECTION HEADINGS
+──────────────────────────────────────────────────────────── */
+.footer__heading {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.footer__heading-icon {
+    font-size: 0.7rem;
+    opacity: 0.85;
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   8. BRAND COLUMN
+──────────────────────────────────────────────────────────── */
+.footer__col--brand {
+    gap: 22px;
+}
+
+/* ── Logo (matches header.php logo exactly) ── */
+.footer__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    transition: opacity var(--transition), transform var(--transition);
+}
+
+.footer__logo:hover {
+    opacity: 0.85;
+    transform: scale(1.02);
+}
+
+.footer__logo-img {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px var(--accent-glow));
+    transition: filter var(--transition), height var(--transition);
+}
+
+.footer__logo:hover .footer__logo-img {
+    filter: drop-shadow(0 0 18px var(--accent-glow));
+}
+
+/* SVG fallback (hidden unless logo.png 404s) */
+.footer__logo-fallback {
+    width: 40px;
+    height: 40px;
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-glow);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Wordmark */
+.footer__logo-text {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 900;
+    font-size: 1.4rem;
+    color: var(--text);
+    letter-spacing: -0.01em;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.footer__logo-text span {
+    color: var(--accent);
+}
+
+/* Brand description */
+.footer__brand-desc {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.75;
+    max-width: 300px;
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   9. SOCIAL ICONS ROW
+──────────────────────────────────────────────────────────── */
+.footer__social {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* Base icon button */
+.social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    font-size: 1rem;
+    color: var(--text);
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    transition:
+        background   var(--transition),
+        border-color var(--transition),
+        color        var(--transition),
+        transform    var(--transition),
+        box-shadow   var(--transition);
+    flex-shrink: 0;
+}
+
+.social-btn:hover {
+    transform: translateY(-4px) scale(1.06);
+}
+
+/* ── Per-platform brand colours on hover ── */
+.social-btn--facebook:hover {
+    background: var(--fb);
+    border-color: var(--fb);
+    box-shadow: 0 6px 20px rgba(24, 119, 242, 0.4);
+}
+
+.social-btn--instagram:hover {
+    background: linear-gradient(45deg, var(--ig-start), #e1306c, var(--ig-end));
+    border-color: transparent;
+    box-shadow: 0 6px 20px rgba(188, 24, 136, 0.4);
+}
+
+.social-btn--x:hover {
+    background: #1a1a1a;
+    border-color: #333;
+    box-shadow: 0 6px 20px rgba(255,255,255,0.1);
+}
+
+.social-btn--youtube:hover {
+    background: var(--yt);
+    border-color: var(--yt);
+    box-shadow: 0 6px 20px rgba(255, 0, 0, 0.4);
+}
+
+.social-btn--tiktok:hover {
+    background: #161823;
+    border-color: #69C9D0;
+    color: #EE1D52;
+    box-shadow: 0 6px 20px rgba(238, 29, 82, 0.3);
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   10. LINK LISTS (Quick Links & Business)
+──────────────────────────────────────────────────────────── */
+.footer__links {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.footer__link {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.875rem;
+    color: var(--muted);
+    padding: 7px 10px;
+    border-radius: var(--radius-sm);
+    transition:
+        color       var(--transition),
+        background  var(--transition),
+        gap         var(--transition);
+}
+
+/* Chevron icon */
+.footer__link i {
+    font-size: 0.6rem;
+    color: var(--accent);
+    opacity: 0.6;
+    flex-shrink: 0;
+    transition:
+        opacity   var(--transition),
+        transform var(--transition);
+}
+
+.footer__link:hover {
+    color: var(--text);
+    background: var(--hover);
+    gap: 14px;         /* chevron slides right */
+}
+
+.footer__link:hover i {
+    opacity: 1;
+    transform: translateX(3px);
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   11. CONTACT LIST
+──────────────────────────────────────────────────────────── */
+.footer__contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer__contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+/* Gold icon circle */
+.footer__contact-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-glow);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    color: var(--accent);
+    margin-top: 1px;
+}
+
+.footer__contact-link,
+.footer__contact-text {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.55;
+    transition: color var(--transition);
+}
+
+.footer__contact-link:hover {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   12. NEWSLETTER FORM
+──────────────────────────────────────────────────────────── */
+.footer__newsletter {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.footer__newsletter-field {
+    display: flex;
+    align-items: center;
+    background: var(--input-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+    transition:
+        border-color var(--transition),
+        box-shadow   var(--transition);
+}
+
+.footer__newsletter-field:focus-within {
+    border-color: var(--accent-glow);
+    box-shadow: 0 0 0 3px var(--accent-dim);
+}
+
+.footer__newsletter-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.82rem;
+    padding: 10px 16px;
+}
+
+.footer__newsletter-input::placeholder {
+    color: var(--muted-2);
+}
+
+.footer__newsletter-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--accent);
+    border: none;
+    color: #000;
+    font-size: 0.82rem;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition:
+        background  var(--transition),
+        box-shadow  var(--transition);
+}
+
+.footer__newsletter-btn:hover {
+    background: var(--accent-hover);
+    box-shadow: 0 0 14px var(--accent-glow);
+}
+
+.footer__newsletter-note {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.72rem;
+    color: var(--muted-2);
+    padding-left: 4px;
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   13. FOOTER BOTTOM BAR
+──────────────────────────────────────────────────────────── */
+.footer__bottom {
+    background: var(--panel-2);
+    border-top: 1px solid var(--border);
+    padding: 20px 24px;
+}
+
+.footer__bottom-inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+/* Copyright text */
+.footer__copyright {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.82rem;
+    color: var(--muted);
+}
+
+.footer__copyright i {
+    color: var(--accent);
+    font-size: 0.78rem;
+}
+
+.footer__copyright strong {
+    color: var(--text);
+    font-weight: 700;
+}
+
+/* Credit line */
+.footer__credit {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.82rem;
+    color: var(--muted);
+}
+
+.footer__credit-name {
+    color: var(--accent);
+    font-weight: 700;
+}
+
+/* Pulsing heart */
+.footer__credit-heart {
+    color: #E63946;
+    font-size: 0.75rem;
+    animation: heartbeat 1.4s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1);    opacity: 1;    }
+    14%       { transform: scale(1.25); opacity: 1;    }
+    28%       { transform: scale(1);    opacity: 0.85; }
+    42%       { transform: scale(1.15); opacity: 1;    }
+    70%       { transform: scale(1);    opacity: 1;    }
+}
+
+/* Back-to-top button */
+.footer__back-top-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-glow);
+    border-radius: 50%;
+    color: var(--accent);
+    font-size: 0.8rem;
+    transition:
+        background   var(--transition),
+        box-shadow   var(--transition),
+        transform    var(--transition),
+        border-color var(--transition);
+}
+
+.footer__back-top-btn:hover {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+    box-shadow: 0 0 20px var(--accent-glow);
+    transform: translateY(-3px);
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   14. RESPONSIVE
+──────────────────────────────────────────────────────────── */
+
+/* ── Large desktop: 4-col keeps natural ── */
+@media (min-width: 1100px) {
+    .footer__inner {
+        grid-template-columns: 1.6fr 1fr 1fr 1.4fr;
+    }
+}
+
+/* ── Medium (tablet landscape) → 2×2 grid ── */
+@media (max-width: 1099px) and (min-width: 641px) {
+    .footer__inner {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px 36px;
+    }
+
+    /* Brand col spans full width on medium */
+    .footer__col--brand {
+        grid-column: 1 / -1;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 40px;
+        flex-wrap: wrap;
+    }
+
+    .footer__brand-desc {
+        max-width: 360px;
+    }
+}
+
+/* ── Tablet portrait & mobile ── */
+@media (max-width: 640px) {
+    .footer__main {
+        padding: 52px 20px 40px;
+    }
+
+    .footer__inner {
+        grid-template-columns: 1fr;
+        gap: 36px;
+    }
+
+    /* Brand description shorter on mobile */
+    .footer__brand-desc {
+        max-width: 100%;
+    }
+
+    .footer__social {
+        gap: 8px;
+    }
+
+    .social-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 0.9rem;
+    }
+
+    /* Bottom bar stacks */
+    .footer__bottom-inner {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 12px;
+    }
+
+    .footer__back-top {
+        order: -1;    /* back-to-top floats to top on mobile */
+    }
+}
+
+/* ── Very small ── */
+@media (max-width: 360px) {
+    .footer__logo-text {
+        font-size: 1.15rem;
+    }
+
+    .footer__logo-img {
+        height: 32px;
+    }
+
+    .social-btn {
+        width: 34px;
+        height: 34px;
+        font-size: 0.82rem;
+        border-radius: var(--radius-sm);
+    }
+}
+
+
+/* ────────────────────────────────────────────────────────────
+   15. SCROLLBAR (for any overflow containers)
+──────────────────────────────────────────────────────────── */
+::-webkit-scrollbar         { width: 8px; }
+::-webkit-scrollbar-track   { background: var(--bg); }
+::-webkit-scrollbar-thumb   {
+    background: var(--panel-2);
+    border-radius: var(--radius-pill);
+    border: 2px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--accent-dim); }
+
+
+/* ════════════════════════════════════════════════════════════
+   END OF FOOTER.CSS
+════════════════════════════════════════════════════════════ */
