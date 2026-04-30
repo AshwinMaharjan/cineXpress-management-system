@@ -63,10 +63,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
                class="nav-link <?= $current_page === 'movies.php'  ? 'active' : '' ?>">
                 <i class="fa-solid fa-clapperboard nav-link__icon"></i>Movies
             </a>
-            <a href="theater.php"
-               class="nav-link <?= $current_page === 'theater.php'    ? 'active' : '' ?>">
-                <i class="fa-solid fa-building nav-link__icon"></i>Theaters
-            </a>
             <a href="coming_soon.php"
                class="nav-link <?= $current_page === 'coming_soon.php' ? 'active' : '' ?>">
                 <i class="fa-regular fa-clock nav-link__icon"></i>Coming Soon
@@ -79,7 +75,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
                 <!-- Admin badge -->
                 <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                    <a href="admin/index.php" class="admin-badge">
+                    <a href="index.php" class="admin-badge">
                         <i class="fa-solid fa-shield-halved"></i>
                         Admin
                     </a>
@@ -109,12 +105,10 @@ $current_page = basename($_SERVER['PHP_SELF']);
                             </span>
                         </div>
                         <div class="avatar-dropdown__divider"></div>
-                        <a href="my_bookings.php" class="avatar-dropdown__item" role="menuitem">
-                            <i class="fa-solid fa-ticket"></i> My Bookings
-                        </a>
-                        <a href="profile.php" class="avatar-dropdown__item" role="menuitem">
-                            <i class="fa-solid fa-user"></i> Profile
-                        </a>
+                        <a href="<?= ($_SESSION['role'] === 'admin') ? 'admin/dashboard.php' : 'users/dashboard.php' ?>" 
+   class="avatar-dropdown__item" role="menuitem">
+    <i class="fa-solid fa-gauge"></i> My Dashboard </a>
+</a>
                         <div class="avatar-dropdown__divider"></div>
                         <a href="logout.php" class="avatar-dropdown__item avatar-dropdown__item--danger" role="menuitem">
                             <i class="fa-solid fa-right-from-bracket"></i> Sign Out
@@ -162,10 +156,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
                class="nav-link <?= $current_page === 'movies.php'  ? 'active' : '' ?>">
                 <i class="fa-solid fa-clapperboard"></i> Movies
             </a>
-            <a href="theater.php"
-               class="nav-link <?= $current_page === 'theater.php'    ? 'active' : '' ?>">
-                <i class="fa-solid fa-building"></i> Theaters
-            </a>
             <a href="coming_soon.php"
                class="nav-link <?= $current_page === 'coming_soon.php' ? 'active' : '' ?>">
                 <i class="fa-regular fa-clock"></i> Coming Soon
@@ -190,11 +180,12 @@ $current_page = basename($_SERVER['PHP_SELF']);
                     </div>
                 </div>
                 <div class="mobile-auth__btns">
-                    <a href="my_bookings.php" class="btn-ghost">
-                        <i class="fa-solid fa-ticket"></i> My Bookings
-                    </a>
+                    <a href="<?= ($_SESSION['role'] === 'admin') ? 'admin/dashboard.php' : 'users/dashboard.php' ?>" 
+   class="btn-ghost">
+    <i class="fa-solid fa-gauge"></i> My Dashboard
+</a>
                     <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                    <a href="admin/index.php" class="admin-badge">
+                    <a href="index.php" class="admin-badge">
                         <i class="fa-solid fa-shield-halved"></i> Admin
                     </a>
                     <?php endif; ?>

@@ -1,120 +1,373 @@
-body {
-    font-family: Arial, sans-serif;
-    background: #f9f9f9;
-    margin: 0;
-    padding: 0;
+/* ═══════════════════════════════════════════════════════
+   TICKET MODAL — CineVerse
+   Used inside #ticketModal in my_bookings.php
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Modal overlay ──────────────────────────────────── */
+#ticketModal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.78);
+    backdrop-filter: blur(6px);
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
 }
-
-.ticket {
-    background: white;
-    padding: 30px;
-    max-width: 700px;
-    margin: 40px auto; /* Added vertical space above and below */
-    border-radius: 10px;
-    box-shadow: 0 0 10px #ccc;
-}
-
-
-h2, h3 {
-    text-align: center;
-    margin: 5px 0;
-}
-
-.ticket-content {
+#ticketModal.active {
     display: flex;
-    gap: 20px;
-    margin-top: 20px;
-    align-items: flex-start;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    animation: fadeIn 0.25s ease;
 }
 
-.ticket-image {
-    flex: 1 1 40%;
-    max-width: 25%;
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 
-.ticket-info {
-    flex: 1 1 55%;
-    max-width: 55%;
-    text-align: justify;
-}
-
-.poster {
+/* ── Modal shell ────────────────────────────────────── */
+#ticketModal .modal--ticket-shell {
+    background: #0f0f0f;
+    border: 1px solid #2a2a2a;
+    border-radius: 1.25rem;
     width: 100%;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
-   
+    max-width: 780px;
+    padding: 2rem;
+    position: relative;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.7);
+    animation: slideUp 0.3s cubic-bezier(0.22,1,0.36,1);
 }
 
-.details {
-    margin-top: 20px;
-    text-align: center;
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
-.details p {
-    margin: 6px 0;
-    line-height: 1.5;
+/* ── Ticket wrapper ─────────────────────────────────── */
+.ticket-wrap {
+    display: flex;
+    gap: 0;
+    border-radius: 1rem;
+    overflow: hidden;
+    background: #141414;
+    border: 1px solid #252525;
+    /* min-height: 300px; */
+    height: 460px;
+    
 }
 
-hr {
-    border: none;
-    border-top: 1px solid #ccc;
-    margin: 20px 0;
+/* ── Left poster strip ──────────────────────────────── */
+.ticket-poster {
+    position: relative;
+    width: 180px;
+    min-width: 180px;
+    flex-shrink: 0;
+    overflow: hidden;
+    background: #1a1a1a;
 }
-/* Ensure header/footer stretch full width */
-header {
+.ticket-poster img {
     width: 100%;
-    background-color: #222;
-    color: white;
-    padding: 15px 30px;
-    text-align: center;
-    margin-bottom: 20px; /* Add space below header */
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
-
-footer {
+.ticket-poster__placeholder {
     width: 100%;
-    background-color: #222;
-    color: white;
-    padding: 15px 30px;
-    text-align: center;
-    margin-top: 20px; /* Add space above footer */
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: #333;
+}
+.ticket-poster__gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to right,
+        transparent 60%,
+        #141414 100%
+    );
+}
+.ticket-poster__meta {
+    position: absolute;
+    bottom: 1rem;
+    left: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+.ticket-meta-pill {
+    background: rgba(0,0,0,0.65);
+    color: #e0b84e;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 0.25rem 0.6rem;
+    border-radius: 100px;
+    border: 1px solid rgba(224,184,78,0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    width: fit-content;
 }
 
-/* Optional: style navigation inside header if exists */
-header nav a {
-    color: white;
-    margin: 0 15px;
-    text-decoration: none;
+/* ── Right details pane ─────────────────────────────── */
+.ticket-details {
+    flex: 1;
+    padding: 1.6rem 1.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
-footer p {
+/* Header */
+.ticket-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+.ticket-ref {
+    font-size: 0.72rem;
+    color: #666;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     margin: 0;
 }
-/* Hide elements during print */
+.ticket-ref strong {
+    color: #e0b84e;
+}
+.ticket-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: #f5f5f5;
+    margin: 0;
+    line-height: 1.1;
+    letter-spacing: 0.04em;
+}
+
+/* Divider with notches */
+.ticket-divider {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    position: relative;
+    margin: 0.25rem -1.8rem;
+    padding: 0 0;
+}
+.ticket-divider__line {
+    flex: 1;
+    border-top: 1px dashed #2e2e2e;
+}
+.ticket-divider__notch {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #0f0f0f;
+    flex-shrink: 0;
+    border: 1px solid #252525;
+}
+.ticket-divider__notch--left  { margin-left: -9px; }
+.ticket-divider__notch--right { margin-right: -9px; }
+
+/* Info grid */
+.ticket-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem 1.5rem;
+}
+.ticket-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+.ticket-info-item--full {
+    grid-column: 1 / -1;
+}
+.info-label {
+    font-size: 0.7rem;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.info-label i {
+    color: #444;
+}
+.info-label em {
+    color: #666;
+    font-style: normal;
+}
+.info-value {
+    font-size: 0.9rem;
+    color: #e8e8e8;
+    font-weight: 500;
+}
+
+/* Seat chips */
+.seats-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.15rem;
+}
+.seat-chip {
+    background: #1e1e1e;
+    border: 1px solid #333;
+    color: #e0b84e;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    letter-spacing: 0.05em;
+}
+
+/* Pricing */
+.ticket-pricing {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+.pricing-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.82rem;
+    color: #777;
+}
+.pricing-row--total {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #e0b84e;
+    padding-top: 0.5rem;
+    border-top: 1px solid #252525;
+    margin-top: 0.25rem;
+}
+
+/* Status bar */
+.ticket-status-bar {
+    margin-top: auto;
+    padding: 0.55rem 1rem;
+    border-radius: 8px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+}
+.ticket-status-bar.status--confirmed {
+    background: rgba(34, 197, 94, 0.12);
+    color: #22c55e;
+    border: 1px solid rgba(34,197,94,0.25);
+}
+.ticket-status-bar.status--pending {
+    background: rgba(234,179,8,0.1);
+    color: #eab308;
+    border: 1px solid rgba(234,179,8,0.25);
+}
+.ticket-status-bar.status--cancelled {
+    background: rgba(239,68,68,0.1);
+    color: #ef4444;
+    border: 1px solid rgba(239,68,68,0.2);
+}
+
+/* ── Modal action buttons ───────────────────────────── */
+.ticket-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+}
+
+/* ── Print styles ───────────────────────────────────── */
 @media print {
-    /* Hide header, footer, and print button during printing */
-    .branding, footer, .footer, .print-button {
+    body * { visibility: hidden; }
+    .ticket-print-area,
+    .ticket-print-area * { visibility: visible; }
+    .ticket-print-area {
+        position: fixed;
+        inset: 0;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+    }
+
+    .ticket-wrap {
+        width: 1000px;
+        border: 2px solid #ddd;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #fff;
+        box-shadow: none;
+    }
+
+    .ticket-poster { width: 160px; min-width: 160px; }
+    .ticket-poster__gradient { display: none; }
+    .ticket-meta-pill {
+        background: #f5f5f5;
+        color: #a07c00;
+        border-color: #ddd;
+    }
+
+    .ticket-details {
+        background: #fff;
+        color: #111;
+        padding: 1.4rem 1.6rem;
+    }
+    .ticket-ref          { color: #999; }
+    .ticket-ref strong   { color: #a07c00; }
+    .ticket-title        { color: #111; font-size: 1.8rem; }
+    .info-label          { color: #999; }
+    .info-value          { color: #111; }
+    .seat-chip {
+        background: #f5f5f5;
+        color: #a07c00;
+        border-color: #ddd;
+    }
+    .pricing-row         { color: #666; }
+    .pricing-row--total  { color: #a07c00; }
+    .ticket-divider__line  { border-color: #ddd; }
+    .ticket-divider__notch { background: #fff; border-color: #ddd; }
+
+    .ticket-status-bar.status--confirmed {
+        background: #f0fdf4;
+        color: #16a34a;
+        border-color: #bbf7d0;
+    }
+
+    /* Hide everything except ticket */
+    #ticketModal .ticket-modal-actions,
+    #ticketModal .modal--ticket-shell > *:not(#ticketContent) {
         display: none !important;
     }
 }
 
-.print-button {
-    text-align: center;
-    margin: 20px;
-}
+/* ── Responsive ─────────────────────────────────────── */
+@media (max-width: 580px) {
+    .ticket-wrap {
+        flex-direction: column;
+    }
+    .ticket-poster {
+        width: 100%;
+        min-width: unset;
+        height: 180px;
+    }
+    .ticket-poster__gradient {
+        background: linear-gradient(to bottom, transparent 60%, #141414 100%);
+    }
+    .ticket-info-grid {
+        grid-template-columns: 1fr;
+    }
+    .ticket-title { font-size: 1.5rem; }
 
-.print-button button {
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-.print-button button:hover {
-    background-color: #0056b3;
+    #ticketModal .modal--ticket-shell {
+        padding: 1rem;
+    }
 }

@@ -7,7 +7,7 @@
 
 <!-- Font Awesome (include only if not already in header.php) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link rel="stylesheet" href="css/footer.css">
+<link rel="stylesheet" href="../css/footer.css">
 
 <footer class="site-footer">
 
@@ -26,7 +26,7 @@
                 <!-- Logo (same as header — clickable, redirects to index.php) -->
                 <a href="index.php" class="footer__logo" aria-label="CineHall — Go to homepage">
                     <img
-                        src="images/logo.png"
+                        src="../images/logo.png"
                         alt="CineHall logo"
                         class="footer__logo-img"
                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"

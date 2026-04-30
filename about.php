@@ -12,8 +12,8 @@
 
 <main>
   <section>
-    <h2>Welcome to Cinema Hall System</h2>
-    <p><strong>Cinema Hall System</strong> is your trusted platform for a seamless, modern movie-watching experience. We bring the latest films to your fingertips and make theater bookings easy and efficient. Whether you're a fan of Hollywood, Bollywood, Kollywood, or Tollywood, we've got you covered.</p>
+    <h2>Welcome to CineXpress</h2>
+    <p><strong>CineXpress</strong> is your trusted platform for a seamless, modern movie-watching experience. We bring the latest films to your fingertips and make theater bookings easy and efficient. Whether you're a fan of Hollywood, Bollywood, Kollywood, or Tollywood, we've got you covered.</p>
   </section>
 
   <section>

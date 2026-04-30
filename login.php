@@ -22,15 +22,18 @@ $data = mysqli_fetch_array($result);
 if (password_verify($password, $data['password'])) {
     $role = $data['roletype'];
 
-    $_SESSION['uid'] = $data['userid'];
-    $_SESSION['type'] = $role;
-    $_SESSION['email'] = $data['email'];
-    $_SESSION['name'] = $data['name'] ?? 'User';
+    // ── Correct session keys ─────────────────────────────
+    $_SESSION['userid']   = $data['userid'];
+    $_SESSION['username'] = $data['name'] ?? 'User';
+    $_SESSION['email']    = $data['email'];
+    $_SESSION['role']     = ($role == 1) ? 'admin' : 'member';
+    $_SESSION['avatar']   = $data['profile_pic'] ?? null;
+    // ─────────────────────────────────────────────────────
 
-    if($role == 1) {
+    if ($role == 1) {
         header("Location: admin/dashboard.php");
         exit();
-    } else if($role == 2) {
+    } else {
         header("Location: users/dashboard.php");
         exit();
     }
@@ -47,7 +50,7 @@ if (password_verify($password, $data['password'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Cinema Hall System</title>
+    <title>Login - CineXpress</title>
     <link rel="stylesheet" href="css/login.css">
         <link rel="icon" type="image/png" href="images/icon.ico">
 
@@ -62,7 +65,6 @@ if (password_verify($password, $data['password'])) {
     <div class="mobile-nav" id="mobileNav">
         <a href="index.php" class="mobile-nav-link">Dashboard</a>
         <a href="movies.php" class="mobile-nav-link">Movies</a>
-        <a href="theater.php" class="mobile-nav-link">Theater</a>
         <a href="login.php" class="mobile-nav-link active">Login</a>
         <a href="register.php" class="mobile-nav-link">Register</a>
     </div>

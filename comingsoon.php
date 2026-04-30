@@ -68,6 +68,7 @@ if ($is_search) {
         "SELECT movies.*, category.catname
          FROM movies
          INNER JOIN category ON category.catid = movies.catid
+         WHERE movies.movie_type = 'coming_soon'
          ORDER BY movies.movieid DESC"
     );
 }
@@ -357,7 +358,78 @@ $coming_soon_count = (int)(mysqli_fetch_row(mysqli_query($con, "SELECT COUNT(*) 
 <body>
 
 
+<!-- ════════════════════════════════════════════════════════
+     SEARCH BAR
+════════════════════════════════════════════════════════ -->
+<div class="search-wrapper">
+    <form class="search-form" action="coming_soon.php" method="post" role="search">
+
+        <div class="search-form__field">
+            <i class="fa-solid fa-magnifying-glass search-form__icon"></i>
+            <input
+                type="text"
+                name="movie_search"
+                class="search-form__input"
+                placeholder="Search movies…"
+                value="<?= htmlspecialchars($movie_search, ENT_QUOTES, 'UTF-8') ?>"
+                autocomplete="off"
+            >
+        </div>
+
+        <div class="search-form__field search-form__field--select">
+            <i class="fa-solid fa-layer-group search-form__icon"></i>
+            <select name="catid" class="search-form__select">
+                <option value="">All Categories</option>
+                <?php foreach ($categories as $cat): ?>
+                <option
+                    value="<?= (int)$cat['catid'] ?>"
+                    <?= $catid == $cat['catid'] ? 'selected' : '' ?>
+                >
+                    <?= htmlspecialchars($cat['catname'], ENT_QUOTES, 'UTF-8') ?>
+                </option>
+                <?php endforeach; ?>
+            </select>
+            <i class="fa-solid fa-chevron-down search-form__chevron"></i>
+        </div>
+
+        <button type="submit" name="btnSearch" class="search-form__btn">
+            <i class="fa-solid fa-search"></i>
+            Search
+        </button>
+
+    </form>
+</div><!-- /.search-wrapper -->
+
+
+<!-- ════════════════════════════════════════════════════════
+     SECTION LABEL
+════════════════════════════════════════════════════════ -->
 <main class="homepage-main">
+
+    <div class="section-bar">
+        <div class="section-bar__left">
+            <?php if ($is_search): ?>
+                <h2 class="section-bar__title">
+                    <i class="fa-solid fa-search section-bar__icon"></i>
+                    Search Results
+                    <span class="section-bar__count"><?= count($movies) ?> found</span>
+                </h2>
+                <a href="coming_soon.php" class="section-bar__reset">
+                    <i class="fa-solid fa-xmark"></i> Clear
+                </a>
+            <?php else: ?>
+                <h2 class="section-bar__title">
+                    <i class="fa-solid fa-clapperboard section-bar__icon"></i>
+                    Coming Soon
+                    <span class="section-bar__count"><?= count($movies) ?> movies</span>
+                </h2>
+            <?php endif; ?>
+        </div>
+
+        <a href="movies.php" class="section-bar__view-all">
+            View All <i class="fa-solid fa-arrow-right"></i>
+        </a>
+    </div><!-- /.section-bar -->
 
 
     <!-- ════════════════════════════════════════════════════

@@ -5,69 +5,106 @@ include("admin_header.php");
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action'])) {
+
+        // ── ADD ──────────────────────────────────────────────────────────
         if ($_POST['action'] === 'add') {
-            // Add new movie
-            $title = $_POST['title'];
-            $description = $_POST['description'];
+            $title        = $_POST['title'];
+            $description  = $_POST['description'];
             $release_date = $_POST['release_date'];
-            $trailer = $_POST['trailer'];
-            $movie = $_POST['movie'];
-            $rating = $_POST['rating'];
-            $catid = $_POST['catid'];
-            
-            // Handle image upload
-            $image = '';
-            if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
-                $target_dir = "uploads/";
-                if (!file_exists($target_dir)) {
-                    mkdir($target_dir, 0777, true);
-                }
-                $image = $target_dir . time() . '_' . basename($_FILES['image']['name']);
-                move_uploaded_file($_FILES['image']['tmp_name'], $image);
+            $trailer      = $_POST['trailer'];
+            $rating       = $_POST['rating'];
+            $catid        = $_POST['catid'];
+            $movie_type   = $_POST['movie_type'];
+            $price        = $_POST['price'];
+
+            // ── Backend date validation ──
+            if (empty($release_date) || !strtotime($release_date)) {
+                $error_message = "Please enter a valid release date.";
+            } elseif ($release_date < date('Y-m-d')) {
+                $error_message = "Release date cannot be in the past.";
             }
-            
-            $stmt = $con->prepare("INSERT INTO movies (title, description, release_date, image, trailer, movie, rating, catid) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("ssssssdi", $title, $description, $release_date, $image, $trailer, $movie, $rating, $catid);
-            $stmt->execute();
-            $success_message = "Movie added successfully!";
+
+            // ── Backend price validation ──
+            if (!isset($error_message)) {
+                if (!is_numeric($price) || $price < 0) {
+                    $error_message = "Price cannot be negative.";
+                } elseif ($price > 1000) {
+                    $error_message = "Price cannot exceed 1000.";
+                }
+            }
+
+            if (!isset($error_message)) {
+                // Handle image upload
+                $image = '';
+                if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
+                    $target_dir = "uploads/";
+                    if (!file_exists($target_dir)) {
+                        mkdir($target_dir, 0777, true);
+                    }
+                    $image = $target_dir . time() . '_' . basename($_FILES['image']['name']);
+                    move_uploaded_file($_FILES['image']['tmp_name'], $image);
+                }
+
+                $stmt = $con->prepare("INSERT INTO movies (title, description, release_date, image, trailer, rating, catid, movie_type, price) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param("sssssdiss", $title, $description, $release_date, $image, $trailer, $rating, $catid, $movie_type, $price);
+                $stmt->execute();
+                $success_message = "Movie added successfully!";
+            }
+
+        // ── DELETE ───────────────────────────────────────────────────────
         } elseif ($_POST['action'] === 'delete') {
-            // Delete movie
             $movieid = $_POST['movieid'];
             $stmt = $con->prepare("DELETE FROM movies WHERE movieid = ?");
             $stmt->bind_param("i", $movieid);
             $stmt->execute();
             $success_message = "Movie deleted successfully!";
-        } elseif ($_POST['action'] === 'update') {
-            // Update movie
-            $movieid = $_POST['movieid'];
-            $title = $_POST['title'];
-            $description = $_POST['description'];
-            $release_date = $_POST['release_date'];
-            $trailer = $_POST['trailer'];
-            $movie = $_POST['movie'];
-            $rating = $_POST['rating'];
-            $catid = $_POST['catid'];
-            
-            // Handle image upload
-            if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
-                $target_dir = "uploads/posters/";
-                if (!file_exists($target_dir)) {
-                    mkdir($target_dir, 0777, true);
-                }
-                $filename = time() . '_' . basename($_FILES['image']['name']);
-$path = "uploads/" . $filename;
 
-move_uploaded_file($_FILES['image']['tmp_name'], $path);
-$image = $filename;
-                
-                $stmt = $con->prepare("UPDATE movies SET title=?, description=?, release_date=?, image=?, trailer=?, movie=?, rating=?, catid=? WHERE movieid=?");
-                $stmt->bind_param("ssssssdii", $title, $description, $release_date, $image, $trailer, $movie, $rating, $catid, $movieid);
-            } else {
-                $stmt = $con->prepare("UPDATE movies SET title=?, description=?, release_date=?, trailer=?, movie=?, rating=?, catid=? WHERE movieid=?");
-                $stmt->bind_param("sssssdii", $title, $description, $release_date, $trailer, $movie, $rating, $catid, $movieid);
+        // ── UPDATE ───────────────────────────────────────────────────────
+        } elseif ($_POST['action'] === 'update') {
+            $movieid      = $_POST['movieid'];
+            $title        = $_POST['title'];
+            $description  = $_POST['description'];
+            $release_date = $_POST['release_date'];
+            $trailer      = $_POST['trailer'];
+            $rating       = $_POST['rating'];
+            $catid        = $_POST['catid'];
+            $movie_type   = $_POST['movie_type'];
+            $price        = $_POST['price'];
+
+            // ── Backend date validation ──
+            if (empty($release_date) || !strtotime($release_date)) {
+                $error_message = "Please enter a valid release date.";
+            } elseif ($release_date < date('Y-m-d')) {
+                $error_message = "Release date cannot be in the past.";
             }
-            $stmt->execute();
-            $success_message = "Movie updated successfully!";
+
+            // ── Backend price validation ──
+            if (!isset($error_message)) {
+                if (!is_numeric($price) || $price < 0) {
+                    $error_message = "Price cannot be negative.";
+                } elseif ($price > 1000) {
+                    $error_message = "Price cannot exceed 1000.";
+                }
+            }
+
+            if (!isset($error_message)):
+                if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
+                    $target_dir = "uploads/";
+                    if (!file_exists($target_dir)) {
+                        mkdir($target_dir, 0777, true);
+                    }
+                    $image = $target_dir . time() . '_' . basename($_FILES['image']['name']);
+                    move_uploaded_file($_FILES['image']['tmp_name'], $image);
+
+                    $stmt = $con->prepare("UPDATE movies SET title=?, description=?, release_date=?, image=?, trailer=?, rating=?, catid=?, movie_type=?, price=? WHERE movieid=?");
+                    $stmt->bind_param("ssssssdissi", $title, $description, $release_date, $image, $trailer, $rating, $catid, $movie_type, $price, $movieid);
+                } else {
+                    $stmt = $con->prepare("UPDATE movies SET title=?, description=?, release_date=?, trailer=?, rating=?, catid=?, movie_type=?, price=? WHERE movieid=?");
+                    $stmt->bind_param("ssssdissi", $title, $description, $release_date, $trailer, $rating, $catid, $movie_type, $price, $movieid);
+                }
+                $stmt->execute();
+                $success_message = "Movie updated successfully!";
+            endif;
         }
     }
 }
@@ -90,6 +127,12 @@ $movies = $con->query("SELECT m.*, c.catname as category_name FROM movies m LEFT
         </div>
     <?php endif; ?>
 
+    <?php if (isset($error_message)): ?>
+        <div class="alert alert-error">
+            <span>✗</span> <?php echo htmlspecialchars($error_message); ?>
+        </div>
+    <?php endif; ?>
+
     <!-- Add Movie Form -->
     <div class="form-panel">
         <div class="panel-header">
@@ -97,7 +140,7 @@ $movies = $con->query("SELECT m.*, c.catname as category_name FROM movies m LEFT
         </div>
         <form method="POST" enctype="multipart/form-data" class="movie-form" id="addMovieForm">
             <input type="hidden" name="action" value="add">
-            
+
             <div class="form-grid">
                 <div class="form-group">
                     <label for="title">Movie Title *</label>
@@ -109,19 +152,45 @@ $movies = $con->query("SELECT m.*, c.catname as category_name FROM movies m LEFT
                     <select id="catid" name="catid" required>
                         <option value="">Select a category</option>
                         <?php while ($cat = $categories->fetch_assoc()): ?>
-                            <option value="<?php echo $cat['catid']; ?>"><?php echo htmlspecialchars($cat['catname']); ?></option>
+                            <option value="<?php echo $cat['catid']; ?>">
+                                <?php echo htmlspecialchars($cat['catname']); ?>
+                            </option>
                         <?php endwhile; ?>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label for="release_date">Release Date *</label>
-                    <input type="date" id="release_date" name="release_date" required min="<?php echo date('Y-m-d'); ?>">
+                    <input type="date" id="release_date" name="release_date" required>
                 </div>
 
                 <div class="form-group">
                     <label for="rating">Rating (0-10) *</label>
                     <input type="number" id="rating" name="rating" step="0.1" min="0" max="10" required placeholder="8.5">
+                </div>
+
+                <!-- ── MOVIE TYPE ── -->
+                <div class="form-group">
+                    <label for="movie_type">Movie Type *</label>
+                    <select id="movie_type" name="movie_type" required>
+                        <option value="">Select type</option>
+                        <option value="now_showing">Now Showing</option>
+                        <option value="coming_soon">Coming Soon</option>
+                    </select>
+                    <small class="form-hint">Choose where this movie appears on the site</small>
+                </div>
+
+                <!-- ── PRICE ── -->
+                <div class="form-group">
+                    <label for="price">Ticket Price (Rs.) *</label>
+                    <input type="number" id="price" name="price" step="0.01" min="0" max="1000" required placeholder="150">
+                    <small class="form-hint">Enter ticket price (0 – 1000)</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="trailer">Trailer URL</label>
+                    <input type="url" id="trailer" name="trailer" placeholder="https://youtube.com/...">
+                    <small class="form-hint">YouTube or video URL</small>
                 </div>
 
                 <div class="form-group full-width">
@@ -134,18 +203,6 @@ $movies = $con->query("SELECT m.*, c.catname as category_name FROM movies m LEFT
                     <input type="file" id="image" name="image" accept="image/*" required>
                     <small class="form-hint">Upload movie poster (JPG, PNG, WebP)</small>
                 </div>
-
-                <div class="form-group">
-                    <label for="trailer">Trailer URL</label>
-                    <input type="url" id="trailer" name="trailer" placeholder="https://youtube.com/...">
-                    <small class="form-hint">YouTube or video URL</small>
-                </div>
-
-                <div class="form-group full-width">
-                    <label for="movie">Movie File URL</label>
-                    <input type="text" id="movie" name="movie" placeholder="Path or URL to movie file">
-                    <small class="form-hint">Link to the movie file or streaming URL</small>
-                </div>
             </div>
 
             <div class="form-actions">
@@ -154,7 +211,7 @@ $movies = $con->query("SELECT m.*, c.catname as category_name FROM movies m LEFT
                 </button>
                 <button type="reset" class="btn btn-secondary">Clear Form</button>
                 <a href="view_added_movies.php" class="btn btn-view">
-                     View Added Movies
+                    View Added Movies
                 </a>
             </div>
         </form>
@@ -172,7 +229,7 @@ $movies = $con->query("SELECT m.*, c.catname as category_name FROM movies m LEFT
         <form method="POST" enctype="multipart/form-data" id="editForm">
             <input type="hidden" name="action" value="update">
             <input type="hidden" name="movieid" id="edit_movieid">
-            
+
             <div class="form-grid">
                 <div class="form-group">
                     <label for="edit_title">Movie Title *</label>
@@ -182,23 +239,47 @@ $movies = $con->query("SELECT m.*, c.catname as category_name FROM movies m LEFT
                 <div class="form-group">
                     <label for="edit_catid">Category *</label>
                     <select id="edit_catid" name="catid" required>
-                        <?php 
+                        <?php
                         $categories->data_seek(0);
-                        while ($cat = $categories->fetch_assoc()): 
+                        while ($cat = $categories->fetch_assoc()):
                         ?>
-                            <option value="<?php echo $cat['catid']; ?>"><?php echo htmlspecialchars($cat['catname']); ?></option>
+                            <option value="<?php echo $cat['catid']; ?>">
+                                <?php echo htmlspecialchars($cat['catname']); ?>
+                            </option>
                         <?php endwhile; ?>
                     </select>
                 </div>
 
                 <div class="form-group">
                     <label for="edit_release_date">Release Date *</label>
-                    <input type="date" id="edit_release_date" name="release_date" required min="<?php echo date('Y-m-d'); ?>">
+                    <input type="date" id="edit_release_date" name="release_date" required>
                 </div>
 
                 <div class="form-group">
                     <label for="edit_rating">Rating (0-10) *</label>
                     <input type="number" id="edit_rating" name="rating" step="0.1" min="0" max="10" required>
+                </div>
+
+                <!-- ── MOVIE TYPE (edit modal) ── -->
+                <div class="form-group">
+                    <label for="edit_movie_type">Movie Type *</label>
+                    <select id="edit_movie_type" name="movie_type" required>
+                        <option value="now_showing">Now Showing</option>
+                        <option value="coming_soon">Coming Soon</option>
+                    </select>
+                    <small class="form-hint">Choose where this movie appears on the site</small>
+                </div>
+
+                <!-- ── PRICE (edit modal) ── -->
+                <div class="form-group">
+                    <label for="edit_price">Ticket Price (Rs.) *</label>
+                    <input type="number" id="edit_price" name="price" step="0.01" min="0" max="1000" required>
+                    <small class="form-hint">Enter ticket price (0 – 1000)</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit_trailer">Trailer URL</label>
+                    <input type="url" id="edit_trailer" name="trailer">
                 </div>
 
                 <div class="form-group full-width">
@@ -210,16 +291,6 @@ $movies = $con->query("SELECT m.*, c.catname as category_name FROM movies m LEFT
                     <label for="edit_image">Poster Image</label>
                     <input type="file" id="edit_image" name="image" accept="image/*">
                     <small class="form-hint">Leave empty to keep current poster</small>
-                </div>
-
-                <div class="form-group">
-                    <label for="edit_trailer">Trailer URL</label>
-                    <input type="url" id="edit_trailer" name="trailer">
-                </div>
-
-                <div class="form-group full-width">
-                    <label for="edit_movie">Movie File URL</label>
-                    <input type="text" id="edit_movie" name="movie">
                 </div>
             </div>
 
@@ -238,14 +309,16 @@ function editMovie(movieId) {
     fetch('api/get_movie.php?id=' + movieId)
         .then(res => res.json())
         .then(movie => {
-            document.getElementById('edit_movieid').value = movie.movieid;
-            document.getElementById('edit_title').value = movie.title;
-            document.getElementById('edit_description').value = movie.description;
+            document.getElementById('edit_movieid').value      = movie.movieid;
+            document.getElementById('edit_title').value        = movie.title;
+            document.getElementById('edit_description').value  = movie.description;
             document.getElementById('edit_release_date').value = movie.release_date;
-            document.getElementById('edit_rating').value = movie.rating;
-            document.getElementById('edit_catid').value = movie.catid;
-            document.getElementById('edit_trailer').value = movie.trailer || '';
-            document.getElementById('edit_movie').value = movie.movie || '';
+            document.getElementById('edit_rating').value       = movie.rating;
+            document.getElementById('edit_catid').value        = movie.catid;
+            document.getElementById('edit_trailer').value      = movie.trailer || '';
+            document.getElementById('edit_movie_type').value   = movie.movie_type || 'coming_soon';
+            document.getElementById('edit_price').value        = movie.price || '';
+
             document.getElementById('editModal').style.display = 'flex';
         })
         .catch(err => {
@@ -276,12 +349,91 @@ window.onclick = function(event) {
     if (event.target === modal) closeEditModal();
 }
 
-// ✅ Auto-open edit modal if redirected from view page
+// Auto-open edit modal if redirected from view page
 const urlParams = new URLSearchParams(window.location.search);
 const editId = urlParams.get('edit');
 if (editId) {
     editMovie(editId);
 }
+
+// ── Real-time date validation ────────────────────────────────────
+function validateDateInput(input) {
+    const today = new Date().toISOString().split('T')[0];
+    const val   = input.value;
+
+    const existingError = input.parentElement.querySelector('.date-error');
+    if (existingError) existingError.remove();
+    input.style.borderColor = '';
+
+    if (val && val < today) {
+        const msg = document.createElement('small');
+        msg.className   = 'date-error';
+        msg.textContent = '⚠ Release date cannot be in the past.';
+        msg.style.cssText = 'color:#dc2626;display:block;margin-top:4px;font-size:0.8rem;';
+        input.parentElement.appendChild(msg);
+        input.style.borderColor = '#dc2626';
+
+        input.closest('form').querySelectorAll('[type="submit"]').forEach(btn => btn.disabled = true);
+    } else {
+        const form = input.closest('form');
+        const hasErrors = form.querySelectorAll('.date-error, .price-error').length > 0;
+        if (!hasErrors) {
+            form.querySelectorAll('[type="submit"]').forEach(btn => btn.disabled = false);
+        }
+    }
+}
+
+// ── Real-time price validation ───────────────────────────────────
+function validatePriceInput(input) {
+    const val = parseFloat(input.value);
+
+    const existingError = input.parentElement.querySelector('.price-error');
+    if (existingError) existingError.remove();
+    input.style.borderColor = '';
+
+    let errorText = '';
+
+    if (input.value !== '' && !isNaN(val)) {
+        if (val < 0) {
+            errorText = '⚠ Price cannot be negative.';
+        } else if (val > 1000) {
+            errorText = '⚠ Price cannot exceed Rs. 1000.';
+        }
+    }
+
+    if (errorText) {
+        const msg = document.createElement('small');
+        msg.className   = 'price-error';
+        msg.textContent = errorText;
+        msg.style.cssText = 'color:#dc2626;display:block;margin-top:4px;font-size:0.8rem;';
+        input.parentElement.appendChild(msg);
+        input.style.borderColor = '#dc2626';
+
+        input.closest('form').querySelectorAll('[type="submit"]').forEach(btn => btn.disabled = true);
+    } else {
+        const form = input.closest('form');
+        const hasErrors = form.querySelectorAll('.date-error, .price-error').length > 0;
+        if (!hasErrors) {
+            form.querySelectorAll('[type="submit"]').forEach(btn => btn.disabled = false);
+        }
+    }
+}
+
+// ── Attach listeners ─────────────────────────────────────────────
+
+// Date inputs
+document.getElementById('release_date').addEventListener('input',  function () { validateDateInput(this); });
+document.getElementById('release_date').addEventListener('change', function () { validateDateInput(this); });
+
+document.getElementById('edit_release_date').addEventListener('input',  function () { validateDateInput(this); });
+document.getElementById('edit_release_date').addEventListener('change', function () { validateDateInput(this); });
+
+// Price inputs
+document.getElementById('price').addEventListener('input',  function () { validatePriceInput(this); });
+document.getElementById('price').addEventListener('change', function () { validatePriceInput(this); });
+
+document.getElementById('edit_price').addEventListener('input',  function () { validatePriceInput(this); });
+document.getElementById('edit_price').addEventListener('change', function () { validatePriceInput(this); });
 </script>
 
 <?php include("footer.php"); ?>

@@ -1,8 +1,7 @@
 <?php 
 include("connect.php");
-include("admin_header.php");
 
-if(!isset($_SESSION['uid'])){
+if(!isset($_SESSION['userid'])){
     echo "<script>window.location.href='../login.php'</script>";
 }
 
@@ -52,8 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['add'])) {
         $sql = "INSERT INTO `theater`(`theater_name`,`timing`,`timing2`,`timing3`,`timing4`,`date`,`price`,`location`,`movieid`)
                 VALUES ('$theater_name','$timing','$timing2','$timing3','$timing4','$date','$price','$location','$movieid')";
-        setFlash(mysqli_query($con, $sql) ? 'success' : 'error',
-                 mysqli_query($con, "SELECT 1") ? 'Theater added successfully!' : 'Could not add theater.');
         // Re-run properly
         if(mysqli_query($con, $sql)){
             setFlash('success', 'Theater added successfully!');
@@ -98,6 +95,7 @@ if(isset($_GET['editid'])){
     <link rel="icon" type="image/png" href="../images/icon.ico">
 </head>
 <body>
+<?php include("admin_header.php");?>
 
 <!-- ── TOAST NOTIFICATION ── -->
 <?php if($flash): ?>

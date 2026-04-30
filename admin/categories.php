@@ -1,10 +1,9 @@
 <?php
 include("connect.php");
-
-if (!isset($_SESSION['uid'])) {
-    header("Location: ../login.php");
-    exit;
+if(!isset($_SESSION['userid'])){
+    echo "<script>window.location.href='../login.php'</script>";
 }
+
 
 /* ─────────────── EDIT DATA ─────────────── */
 $editData = null;

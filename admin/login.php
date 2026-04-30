@@ -15,14 +15,13 @@
 <div class="branding d-flex align-items-center">
     <div class="container position-relative d-flex align-items-center justify-content-between">
       <a href="index.php" class="logo d-flex align-items-center">
-        <h1 class="sitename">Cinema Hall System</h1>
+        <h1 class="sitename">CineXpress</h1>
       </a>
       <nav id="navmenu" class="navmenu">
         <ul>
         <li><a class="nav-link scrollto active" href="index.php">Dashboard</a></li>
 
         <li><a class="nav-link scrollto active" href="movies.php">Movies</a></li>
-        <li><a class="nav-link scrollto active" href="theater.php">Theater</a></li>
         <li><a class="nav-link scrollto active" href="register.php">Register Now</a></li>
         <li><a class="nav-link scrollto active" href="login.php">Login</a></li>
 
