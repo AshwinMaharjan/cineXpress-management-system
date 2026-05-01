@@ -122,7 +122,49 @@ cineXpress/
 
 ## Screenshots
 
--
+- Landing Page: <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/c9f3a1a3-cd0a-4627-a16d-9c2de4fba45b" />
+
+- Now Showing: <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/c35d40f7-5fe7-466b-8be8-6be65328400f" />
+
+- All Movies: <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/e580ab43-9d57-46e0-be78-4b7a3256843b" />
+
+- Coming Soon: <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/50617e72-213b-4bee-b40c-2c7dc63fb223" />
+
+- Login Page: <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/b3f99ac7-d894-4661-b26f-96e107bad292" />
+
+- Register Page: <img width="1358" height="1049" alt="localhost_updated_cinema_hall_register php (1)" src="https://github.com/user-attachments/assets/196e5832-ad55-4020-bdf3-e4433f067190" />
+
+- Movie Details Page: <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/351d52a6-347c-4e84-8713-db707b2fae51" />
+
+- Trailer Page: <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/53b89e94-58aa-4cf8-8e89-2d50c66a3d3f" />
+
+- Book Tickets: <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/d6485b34-da33-4cfd-84eb-6c54682d1704" /> <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/2ed716f4-c786-4d9b-a675-4cd07bc64ef5" />
+
+- Admin Dashboard: <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/66583392-0b8a-429e-96c4-c164217b59d0" /> <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/2d5ec613-4084-4a60-8e82-e38164fca513" />
+
+- Admin Category Page: <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/896a2f30-914d-4daa-b4c8-4eb8e4145107" />
+
+- Add Movies Page: <img width="1358" height="1046" alt="localhost_updated_cinema_hall_admin_movies php" src="https://github.com/user-attachments/assets/ffebed76-a2d7-4783-bbfe-b66134f04a92" />
+
+- View Movie Added Page: <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/c4077833-c212-4692-bdac-1878d510567a" />
+
+- Revenue Page: <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/8c72f5a2-0a59-4380-9d84-baf1fe014672" /> <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/565397e6-61ae-4e3e-b65d-b3d6f75209d8" /> <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/3745f34c-4dff-42eb-a600-07b7fb08a7c7" />
+
+- View All Users Page: <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/d985cba4-c331-4235-867b-ad5f608aa237" />
+
+- View All Booking Page: <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/9d0c49fa-4f15-47f6-9109-cbd3bb77e828" />
+
+- Users Seat Booking Page:<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/64da76b7-837a-4113-a085-ec04e82b1a66" />
+
+- Users Ticket Confirmed Page: <img width="1358" height="826" alt="localhost_updated_cinema_hall_booking_success php_bookingid=23" src="https://github.com/user-attachments/assets/9c1aef0f-0507-44ee-97d1-3a6e61879bae" />
+ 
+- Users Dashboard Page: <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/d0370533-b8ac-46e2-a8c0-92edb972fdaa" />
+
+- Users Booking Page: <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/45aa2e81-a5b0-4c81-8258-bc9b46d0f830" />
+
+- Users Booking Details: <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/cdaeba6c-cac1-40fe-9f32-6b81f9b75585" />
+
+- Users Ticket Print Page: <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/65c65695-d361-41bc-a58d-9872088c6184" />
 
 ---
 
