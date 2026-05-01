@@ -23,7 +23,7 @@ $admin_pic_path = !empty($admin_pic)
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CineBook &mdash; Admin Panel</title>
+    <title>CineXpress &mdash; Admin Panel</title>
     <link rel="stylesheet" href="../css/admin_header.css" />
     <style>
         /* Avatar image inside the header button */

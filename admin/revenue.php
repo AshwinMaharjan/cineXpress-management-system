@@ -241,7 +241,7 @@ function pagination_qs($page, $from, $to) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Revenue Dashboard — Admin</title>
+    <title>CineXpress - Revenue Dashboard — Admin</title>
     
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

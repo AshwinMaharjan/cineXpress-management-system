@@ -1,5 +1,5 @@
 <!-- ══════════════════════════════════════════════════════════
-     footer.php — CineHall Global Site Footer
+     footer.php — CineXpress Global Site Footer
      Improved: brand block with logo, newsletter strip, Font
      Awesome social icons (no broken image deps), animated
      hover effects, gold accent dividers, fully accessible.
@@ -24,10 +24,10 @@
             <div class="footer__col footer__col--brand">
 
                 <!-- Logo (same as header — clickable, redirects to index.php) -->
-                <a href="index.php" class="footer__logo" aria-label="CineHall — Go to homepage">
+                <a href="index.php" class="footer__logo" aria-label="CineXpress — Go to homepage">
                     <img
                         src="../images/logo.png"
-                        alt="CineHall logo"
+                        alt="CineXpress logo"
                         class="footer__logo-img"
                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
                     >

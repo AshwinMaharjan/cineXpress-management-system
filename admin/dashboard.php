@@ -93,7 +93,7 @@ $max_bookings = !empty($top_movies_arr) ? max(array_column($top_movies_arr, 'boo
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>CineXpress - Admin Dashboard</title>
     <link rel="stylesheet" href="../css/admin_dashboard.css">
     <link rel="icon" type="image/png" href="images/icon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">

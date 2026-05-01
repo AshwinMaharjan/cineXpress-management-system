@@ -11,7 +11,7 @@ if (!isset($_SESSION['userid'])) {
 $userid = (int)$_SESSION['userid'];
 
 // ── Fetch user ──
-$user_stmt = $con->prepare("SELECT * FROM users WHERE userid = ?");
+$user_stmt = $con->prepare("SELECT name, email, phone_number, profile_pic FROM users WHERE userid = ?");
 $user_stmt->bind_param("i", $userid);
 $user_stmt->execute();
 $user = $user_stmt->get_result()->fetch_assoc();
@@ -135,8 +135,10 @@ $avatar_initials = strtoupper(mb_substr($user['name'], 0, 1));
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Dashboard</title>
-    <link rel="stylesheet" href="dashboard.css">
+    <title>CineXpress - My Dashboard</title>
+    <link rel="stylesheet" href="../css/users_dashboard.css">
+    <link rel="icon" type="image/png" href="../images/icon.ico">
+    <link rel="stylesheet" href="../css/header.css">
     <!-- Tabler icons CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/icons-react/dist/index.umd.min.js" defer></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
@@ -147,39 +149,12 @@ $avatar_initials = strtoupper(mb_substr($user['name'], 0, 1));
 
 <main class="dashboard-wrapper">
 
-    <!-- ── Hero ── -->
-    <div class="dashboard-hero">
-        <?php if (!empty($user['profile_pic']) && file_exists("../uploads/profiles/" . $user['profile_pic'])): ?>
-            <img src="../uploads/profiles/<?= htmlspecialchars($user['profile_pic']) ?>"
-                 alt="Avatar" class="hero-avatar">
-        <?php else: ?>
-            <div class="hero-avatar-placeholder"><?= $avatar_initials ?></div>
-        <?php endif; ?>
-
-        <div class="hero-text">
-            <p class="hero-greeting">Welcome back</p>
-            <h1 class="hero-name"><?= htmlspecialchars(explode(' ', $user['name'])[0]) ?> <span><?= htmlspecialchars(implode(' ', array_slice(explode(' ', $user['name']), 1)) ?: '') ?></span></h1>
-            <div class="hero-meta">
-                <span class="hero-meta-item">
-                    <i class="ti ti-mail" style="color:var(--accent);font-size:14px;"></i>
-                    <?= htmlspecialchars($user['email']) ?>
-                </span>
-                <?php if (!empty($user['phone_number'])): ?>
-                <span class="hero-meta-item">
-                    <i class="ti ti-phone" style="color:var(--accent);font-size:14px;"></i>
-                    <?= htmlspecialchars($user['phone_number']) ?>
-                </span>
-                <?php endif; ?>
-            </div>
-        </div>
-    </div>
-
     <!-- ── Stats ── -->
     <div class="stats-grid">
 
         <div class="stat-card">
             <div class="stat-icon">
-                <i class="ti ti-currency-dollar" style="font-size:22px;"></i>
+                <i class="ti ti-currency-rupee" style="font-size:22px;"></i>
             </div>
             <p class="stat-label">Total Spent</p>
             <p class="stat-value gold">Rs. <?= number_format($stats['total_spent'], 0) ?></p>
@@ -261,7 +236,7 @@ $avatar_initials = strtoupper(mb_substr($user['name'], 0, 1));
             $row_num = $offset + 1;
             while ($row = $booking_result->fetch_assoc()):
                 $seats     = format_seats($row['seats']);
-                $img_path  = "../uploads/movies/" . $row['image'];
+                $img_path  = "../admin/" . $row['image'];
                 $has_img   = !empty($row['image']) && file_exists($img_path);
             ?>
             <tr>
@@ -364,6 +339,7 @@ $avatar_initials = strtoupper(mb_substr($user['name'], 0, 1));
     </div><!-- /table-container -->
 
 </main>
+<?php include("footer.php"); ?>
 
 </body>
 </html>

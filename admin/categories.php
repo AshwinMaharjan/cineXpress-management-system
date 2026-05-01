@@ -84,7 +84,7 @@ $result = $con->query("SELECT * FROM category ORDER BY catid DESC");
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Categories</title>
+    <title>CineXpress - Categories</title>
     <link rel="stylesheet" href="../css/categories.css">
     <link rel="icon" type="image/png" href="../images/icon.ico">
 </head>

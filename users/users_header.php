@@ -4,7 +4,7 @@
 
 include("connect.php");
 /**
- * header.php — CineHall Global Site Header
+ * header.php — CineXpress Global Site Header
  * Improved: real logo image (images/logo.png), scroll-shrink effect,
  *           active-indicator underline, avatar dropdown, session-safe,
  *           full mobile drawer with backdrop, ARIA-accessible.
@@ -16,7 +16,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CineHall</title>
+    <title>CineXpress</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,10 +38,10 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <div class="header-inner">
 
         <!-- ── LOGO (image + text, links to index.php) ────────── -->
-        <a href="../index.php" class="logo" aria-label="CineHall — Go to homepage">
+        <a href="../index.php" class="logo" aria-label="CineXpress — Go to homepage">
             <img
                 src="../images/logo.png"
-                alt="CineHall logo"
+                alt="CineXpress logo"
                 class="logo__img"
                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
             >
@@ -113,9 +113,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <div class="avatar-dropdown__divider"></div>
             <a href="my_bookings.php" class="avatar-dropdown__item" role="menuitem">
                 <i class="fa-solid fa-ticket"></i> My Bookings
-            </a>
-            <a href="../profile.php" class="avatar-dropdown__item" role="menuitem">
-                <i class="fa-solid fa-user"></i> Profile
             </a>
             <div class="avatar-dropdown__divider"></div>
             <a href="../logout.php" class="avatar-dropdown__item avatar-dropdown__item--danger" role="menuitem">

@@ -119,6 +119,7 @@ $movies = $con->query("SELECT m.*, c.catname as category_name FROM movies m LEFT
 <link rel="stylesheet" href="../css/movies.css">
 <link rel="icon" type="image/png" href="../images/icon.ico">
 
+
 <div class="movies-container">
 
     <?php if (isset($success_message)): ?>

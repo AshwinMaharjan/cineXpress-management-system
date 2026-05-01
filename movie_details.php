@@ -1,6 +1,6 @@
 <?php
 /**
- * movie_details.php — CineHall Movie Details Page
+ * movie_details.php — CineXpress Movie Details Page
  * Shows full details for a single movie fetched by movieid GET param.
  */
 include("connect.php");
@@ -64,7 +64,7 @@ mysqli_stmt_close($stmt2);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $title ?> — CineHall</title>
+    <title><?= $title ?> — CineXpress</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
