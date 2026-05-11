@@ -2,7 +2,7 @@
 
 A comprehensive web-based cinema ticket booking and management system built with PHP and MySQL. CineXpress allows users to browse movies, select showtimes, pick seats, and complete bookings, while giving admins full control over movies, bookings and transactions.
 
-## 🌐 Live Demo
+## Live Demo
 
 http://cinexpress.great-site.net/index.php
 
